@@ -1,0 +1,31 @@
+#!/bin/sh
+# Use: ledcmd <led-number> <on|off|heartbeat|blink> <optinonal-blink-interval-ms>
+# Use sudo to run this command if not root
+# Supported LED numbers: 3-12, 14
+LED_NR="$1"; CMD="$2"; BLINK_INTERVAL="$3"
+LED_NAME="led_P8_${LED_NR}"
+LEDPATH="/sys/class/leds/${LED_NAME}"
+[ -n "$LED_NR" ] || { echo "usage: $0 <led-number> <on|off|heartbeat|blink> <optional-blink-interval-ms>"; exit 2; }
+[ -d "$LEDPATH" ] || { echo "No such LED: ${LED_NAME}"; exit 2; }
+case "$CMD" in
+  on)
+    echo none > "${LEDPATH}/trigger"
+    echo "$(cat ${LEDPATH}/max_brightness)" > "${LEDPATH}/brightness"
+    ;;
+  off)
+    echo none > "${LEDPATH}/trigger"
+    echo 0 > "${LEDPATH}/brightness"
+    ;;
+  heartbeat)
+    echo heartbeat > "${LEDPATH}/trigger"
+    ;;
+  blink)
+    echo timer > "${LEDPATH}/trigger"
+    echo "${BLINK_INTERVAL:-500}" > "${LEDPATH}/delay_on"
+    echo "${BLINK_INTERVAL:-500}" > "${LEDPATH}/delay_off"
+    ;;
+  *)
+    echo "Unknown command: ${CMD}"
+    exit 2
+    ;;
+esac
