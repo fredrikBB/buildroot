@@ -37,6 +37,17 @@
 					algo = "sha256";
 				};
 			};
+			led_fdt.dtbo {
+				description = "BeagleV-Fire LED overlay";
+				data = /incbin/("./mpfs_beaglev_fire_led.dtbo");
+				type = "flat_dt";
+				arch = "riscv";
+				compression = "none";
+				load = <0x0 0x8a080000>;
+				hash-1 {
+					algo = "sha256";
+				};
+			};
 		};
 
 		configurations {
@@ -50,6 +61,11 @@
 			base_dtb {
 				description = "Base FDT blob for BeagleV-Fire board";
 				fdt = "base_fdt";
+			};
+
+			led_dtbo {
+				description = "BeagleV-Fire LED overlay";
+				fdt = "led_fdt.dtbo";
 			};
 		};
 };

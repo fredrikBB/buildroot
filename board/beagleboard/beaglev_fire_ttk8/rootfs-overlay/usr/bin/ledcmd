@@ -1,7 +1,7 @@
 #!/bin/sh
 # Use: ledcmd <led-number> <on|off|heartbeat|blink> <optinonal-blink-interval-ms>
 # Use sudo to run this command if not root
-# Supported LED numbers: 3-12, 14
+# Supported LED numbers: 3-12 + (makeshift 13) + 14
 LED_NR="$1"; CMD="$2"; BLINK_INTERVAL="$3"
 LED_NAME="led_P8_${LED_NR}"
 LEDPATH="/sys/class/leds/${LED_NAME}"

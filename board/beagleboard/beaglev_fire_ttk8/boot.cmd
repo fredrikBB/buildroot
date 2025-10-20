@@ -6,7 +6,7 @@ setenv fdt_high 0xffffffffffffffff
 setenv initrd_high 0xffffffffffffffff
 
 load mmc 0:${distro_bootpart} ${scriptaddr} beaglev_fire.itb;
-bootm start ${scriptaddr}#kernel_dtb;
+bootm start ${scriptaddr}#kernel_dtb#led_dtbo;
 bootm loados ${scriptaddr};
 # Try to load a ramdisk if available inside fitImage
 bootm ramdisk;
