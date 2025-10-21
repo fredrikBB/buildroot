@@ -1,0 +1,3 @@
+# User: username uid group gid password home shell groups
+# -1 is used for automatic assignment
+beagle -1 users -1 =temppwd /home/beagle /bin/sh sudo,staff

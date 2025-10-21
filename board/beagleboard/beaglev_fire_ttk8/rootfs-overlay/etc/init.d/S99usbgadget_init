@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Create USB ACM gadget if it does not already exist
+[ -x /usr/bin/setup-acm.sh ] && /usr/bin/setup-acm.sh || true
+
+# Wait up to 10s for gadget node to appear
+i=0
+while [ $i -lt 20 ]; do
+  [ -c /dev/ttyGS0 ] && break
+  i=$((i+1))
+  sleep 0.5
+done
+
+[ -c /dev/ttyGS0 ] || exit 0
+
+# Start BusyBox getty
+# This will provide a login prompt on the USB ACM serial port
+busybox getty -L 115200 ttyGS0 vt102 &
+exit 0

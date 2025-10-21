@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Overlay for additional LED on BeagleV-Fire
+ *
+ * led_P8_13 is not available with the default gateware design. 
+ * It is Reserved for PWM. 
+ *
+ * (see: https://git.beagleboard.org/beaglev-fire/gateware/-/tree/main/sources/FPGA-design/script_support/components/CAPE/DEFAULT)
+ * 
+ * The GPIO at P8_15 is free however and we can use this as a replacement.
+ *
+ * Copyright (C) 2025 Microchip Technology Inc. and its subsidiaries.
+ * 
+ */
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "beagle,beaglev-fire", "microchip,mpfs";
+};
+
+&{/} {
+	leds {
+		compatible = "gpio-leds";
+		led13: led_P8_13 {
+			name = "led_P8_13";
+			gpios = <&gpio2 12 0>; /* P8_15 */
+			default-state = "off";
+			status = "okay";
+		};
+	};
+};
